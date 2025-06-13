@@ -1,2 +1,2 @@
 #!/bin/bash
-/bin/echo "hello $(whoami)"
+printf "hello %s\n" "$(whoami)"
