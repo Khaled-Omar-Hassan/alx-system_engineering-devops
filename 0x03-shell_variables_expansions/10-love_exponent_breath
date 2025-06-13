@@ -1,4 +1,2 @@
 #!/bin/bash
-breath=${BREATH:-0}
-love=${LOVE:-0}
-[ "$breath" -eq 0 ] && [ "$love" -eq 0 ] && echo 0 || echo $((breath ** love))
+echo $(( ${BREATH:-0} ** ${LOVE:-0} ))

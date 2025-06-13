@@ -1,4 +1,2 @@
 #!/bin/bash
-power=${POWER:-0}
-divide=${DIVIDE:-1}
-echo $((power / divide))
+echo $(( ${POWER:-0} / ${DIVIDE:-1} ))
