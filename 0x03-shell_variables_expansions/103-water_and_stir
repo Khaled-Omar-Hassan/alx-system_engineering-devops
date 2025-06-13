@@ -1,2 +1,11 @@
 #!/bin/bash
-echo "$(( 2#$(echo "$WATER" | tr 'water' '01234') + 2#$(echo "$STIR" | tr 'stir' '0123') ))" | awk '{n=$1; b="bestchol"; r=""; while(n){r=substr(b,n%length(b)+1,1) r; n=int(n/length(b))} print r}'
+w=$(echo "$WATER" | tr "water" "01234")
+s=$(echo "$STIR" | tr "stir" "0123")
+sum=$((5#$w + 4#$s))
+base=bestchol
+out=""
+while [ $sum -gt 0 ]; do
+  out="${base:sum%9:1}$out"
+  sum=$((sum / 9))
+done
+echo "$out"
