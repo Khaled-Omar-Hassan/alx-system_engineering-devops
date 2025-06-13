@@ -1,11 +1,50 @@
 #!/bin/bash
-w=$(echo "$WATER" | tr "water" "01234")
-s=$(echo "$STIR" | tr "stir" "0123")
-sum=$((5#$w + 4#$s))
-base=bestchol
-out=""
-while [ $sum -gt 0 ]; do
-  out="${base:sum%9:1}$out"
-  sum=$((sum / 9))
+
+# Convert WATER (base-5) using mapping: w=0, a=1, t=2, e=3, r=4
+w_raw="${WATER:-}"
+w_bin=""
+i=0
+while [ $i -lt ${#w_raw} ]; do
+  c="${w_raw:$i:1}"
+  case "$c" in
+    w) w_bin="${w_bin}0" ;;
+    a) w_bin="${w_bin}1" ;;
+    t) w_bin="${w_bin}2" ;;
+    e) w_bin="${w_bin}3" ;;
+    r) w_bin="${w_bin}4" ;;
+  esac
+  i=$((i + 1))
 done
-echo "$out"
+
+# Convert STIR (base-4) using mapping: s=0, t=1, i=2, r=3
+s_raw="${STIR:-}"
+s_bin=""
+j=0
+while [ $j -lt ${#s_raw} ]; do
+  c="${s_raw:$j:1}"
+  case "$c" in
+    s) s_bin="${s_bin}0" ;;
+    t) s_bin="${s_bin}1" ;;
+    i) s_bin="${s_bin}2" ;;
+    r) s_bin="${s_bin}3" ;;
+  esac
+  j=$((j + 1))
+done
+
+# Convert to decimal
+w_val=$((5#$w_bin))
+s_val=$((4#$s_bin))
+sum=$((w_val + s_val))
+
+# Convert sum to base bestchol
+base="bestchol"
+base_len=${#base}
+result=""
+while [ $sum -gt 0 ]; do
+  idx=$((sum % base_len))
+  ch="${base:$idx:1}"
+  result="${ch}${result}"
+  sum=$((sum / base_len))
+done
+
+echo "$result"
