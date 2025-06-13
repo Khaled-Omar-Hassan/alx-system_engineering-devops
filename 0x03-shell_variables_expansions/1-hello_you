@@ -1,3 +1,2 @@
 #!/bin/bash
 printf "hello %s\n" "$(whoami)"
-# This script prints "hello" followed by the current user's username.
