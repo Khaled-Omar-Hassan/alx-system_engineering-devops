@@ -1,2 +1,11 @@
 #!/bin/bash
-w=$((5#$(tr 'water' 01234<<<$WATER)));s=$((4#$(tr 'stir' 0123<<<$STIR)));n=$((w+s));b=bestchol;r=;while((n));do r=${b:n%9:1}$r;n=n/9;done;echo $r
+w=$(echo "$WATER" | tr "water" "01234")
+s=$(echo "$STIR" | tr "stir" "0123")
+sum=$((5#$w + 4#$s))
+base=bestchol
+out=""
+while [ $sum -gt 0 ]; do
+  out="${base:sum%9:1}$out"
+  sum=$((sum / 9))
+done
+echo "$out"
